@@ -1,0 +1,16 @@
+FROM node:16-alpine
+
+WORKDIR '/app'
+
+COPY package.json .
+
+RUN npm install
+
+# this COPY is not necessary for development as we 
+# mount the whole pwd to /app in the container
+# however, we leave it here to remember that we will
+# need all of our code for production. It's more like a
+# template command.
+COPY . .
+
+CMD ["npm", "run", "start"]

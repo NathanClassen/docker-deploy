@@ -29,5 +29,6 @@ deploy:
   # tell Travis to only deploy when branch MASTER accepts a new pull request
   on:
     branch: master
+  # similar to BB Pipelines, we reference variables created in the Travis CI console under the repo for this project 
   access_key_id: "$AWS_ACCESS_KEY"
   secret_access_key: "$AWS_SECRET_KEY"

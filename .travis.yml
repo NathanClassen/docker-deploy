@@ -11,6 +11,23 @@ before_install:
 
 # this is the actual work that we want Travis to do
 script:
-# start up container from previously created image, and test
-# partial understanding of -e CI=true is that it tells Docker that this is being run in a CI pipeline, so don't ask for input
+  # start up container from previously created image, and test
+  # partial understanding of -e CI=true is that it tells Docker that this is being run in a CI pipeline, so don't ask for input
   - docker run -e CI=true nathanclassen/docker-react npm run test
+
+# deployment via Travis CI
+deploy:
+  # Travis comes pre built with capability to deploy to AWS
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "frontend"
+  env: "Frontend-env"
+  # code base; Travis takes all files in GH repo, zips, and copies to an S3 bucket. It will then tell EBS which bucket to pull application from
+  bucket_name: "elasticbeanstalk-us-east-1-646349097775"
+  # the bucket is used for all of the EBS envs (apps) you create; bucket_path is specific to this application in particular
+  bucket_path: "frontend"
+  # tell Travis to only deploy when branch MASTER accepts a new pull request
+  on:
+    branch: master
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"

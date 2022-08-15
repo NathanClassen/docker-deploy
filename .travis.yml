@@ -1,0 +1,16 @@
+language: generic
+sudo: required #have to use docker, so Travis needs admin permissions
+
+# tell Travis we need to have the Docker CLI
+services:
+  - docker
+
+# cmmds to execute before running tests
+before_install:
+  - docker build -t nathanclassen/docker-react -f Dockerfile.dev .
+
+# this is the actual work that we want Travis to do
+script:
+# start up container from previously created image, and test
+# partial understanding of -e CI=true is that it tells Docker that this is being run in a CI pipeline, so don't ask for input
+  - docker run -e CI=true nathanclassen/docker-react npm run test

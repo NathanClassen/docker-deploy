@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          hey there
+          this feature will not be deployed until PR is approved
         </p>
         <a
           className="App-link"
